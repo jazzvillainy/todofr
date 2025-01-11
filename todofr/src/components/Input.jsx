@@ -63,6 +63,7 @@ function Input({ formData, setFormData, todoList, isCompleted, setShowModal }) {
           </form>
         </div>
       </section>
+      <div></div>
     </>
   );
 }

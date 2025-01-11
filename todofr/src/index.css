@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+*{
+  /* border: solid;
+  border-width: 1px; */
+}
+
+/* :root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+} */
+body{
+ /* background: #382038; */
+ background: black;
+ min-height: 100dvh;
+ max-height: fit-content; 
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  display: none; /* Hide scrollbar for Chrome, Safari, and Opera */
+}
+
+.calendar-only {
+  /* color: transparent;  */
+  /* Hide text color */
+  background-color: transparent; /* Hide background color */
+  border: none; /* Remove border */
+  outline: none; /* Remove focus outline */
+}
+

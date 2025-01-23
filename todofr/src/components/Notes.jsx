@@ -1,4 +1,4 @@
-import React from "react";
+// import React from "react";
 import { MdAccessAlarm } from "react-icons/md";
 import { ImRadioUnchecked } from "react-icons/im";
 import { FaCheckCircle } from "react-icons/fa";
@@ -8,7 +8,7 @@ function Notes({
   item,
   setTodoList,
   todoList,
-  setIsCompleted,
+  // setIsCompleted,
   isCompleted,
   setShowTaskCompleted,
   setShowTaskRemoved,
@@ -16,7 +16,7 @@ function Notes({
   // showDropDown,
 }) {
   const handleClickfr = () => {
-    item.isCompleted = true;
+    item.isCompleted = !item.isCompleted;
     if (!item.isCompleted) {
       setTimeout(() => {
         console.log(item.isCompleted);
@@ -26,7 +26,8 @@ function Notes({
         setShowTaskRemoved(false);
       }, 4000);
     } else {
-      setIsCompleted(!isCompleted);
+      // setIsCompleted(!isCompleted);
+
       todoList.filter;
       console.log(item);
       setTimeout(() => {

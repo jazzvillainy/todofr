@@ -1,6 +1,13 @@
 import React, { useState } from "react";
 
-function Input({ formData, setFormData, todoList, isCompleted, setShowModal }) {
+function Input({
+  formData,
+  setFormData,
+  todoList,
+  isCompleted,
+  setShowModal,
+  setTodoList,
+}) {
   const [date, setDate] = useState("");
   // const [showModal, setShowModal] = useState(true);
 
@@ -9,14 +16,26 @@ function Input({ formData, setFormData, todoList, isCompleted, setShowModal }) {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    todoList[todoList.length] = {
-      id: todoList.length + 1,
-      data: formData,
-      isCompleted: isCompleted,
-      created_at: new Date(),
-      due_date: date ? new Date(date) : "",
-      showDropDown: false,
-    };
+    // todoList[todoList.length] = {
+    //   id: todoList.length + 1,
+    //   data: formData,
+    //   isCompleted: isCompleted,
+    //   created_at: new Date(),
+    //   due_date: date ? new Date(date) : "",
+    //   showDropDown: false,
+    // };
+    setTodoList([
+      ...todoList,
+      {
+        id: todoList.length + 1,
+        data: formData,
+        isCompleted: isCompleted,
+        created_at: new Date(),
+        due_date: date ? new Date(date) : "",
+        showDropDown: false,
+      },
+    ]);
+
     setFormData("");
     setDate("");
     // setTimeout(()=>{

@@ -14,31 +14,10 @@ function Notes({
   setShowTaskRemoved,
   setShowDropDown,
   // showDropDown,
+  setCompletedList,
+  completedList,
+  handleClick,
 }) {
-  const handleClickfr = () => {
-    item.isCompleted = !item.isCompleted;
-    if (!item.isCompleted) {
-      setTimeout(() => {
-        console.log(item.isCompleted);
-        setShowTaskRemoved(true);
-      }, 500);
-      setTimeout(() => {
-        setShowTaskRemoved(false);
-      }, 4000);
-    } else {
-      // setIsCompleted(!isCompleted);
-
-      todoList.filter;
-      console.log(item);
-      setTimeout(() => {
-        console.log("boobs");
-        setShowTaskCompleted(true);
-      }, 500);
-      setTimeout(() => {
-        setShowTaskCompleted(false);
-      }, 2500);
-    }
-  };
   const handleMoreOptions = () => {
     item.showDropDown = !item.showDropDown;
     console.log(item);
@@ -50,9 +29,10 @@ function Notes({
         className="bg-white bg-opacity-5 h-fit py-5 px-2 w-[90%] rounded-lg flex gap-5"
       >
         <span className="flex">
-          {/* <input onClick={handleClickfr} type="checkbox" name="" id="" /> */}
-          <button className="text-white" onClick={handleClickfr}>
-            {!item.isCompleted ? <ImRadioUnchecked /> : <FaCheckCircle />}
+          {/* <input onClick={handleSetCompletedList} type="checkbox" name="" id="" /> */}
+          <button className="text-white" onClick={() => handleClick(item)}>
+            {todoList ? <ImRadioUnchecked /> : <FaCheckCircle />}
+            {/* this todoList might bug later idk */}
           </button>
         </span>
         <div className="w-full">

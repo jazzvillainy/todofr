@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
 function Input({
-  formData,
-  setFormData,
+  textInputData,
+  setTextInputData,
   todoList,
   isCompleted,
   setShowModal,
@@ -12,13 +12,13 @@ function Input({
   // const [showModal, setShowModal] = useState(true);
 
   const handleChange = (e) => {
-    setFormData(e.target.value);
+    setTextInputData(e.target.value);
   };
   const handleSubmit = (e) => {
     e.preventDefault();
     // todoList[todoList.length] = {
     //   id: todoList.length + 1,
-    //   data: formData,
+    //   data: textInputData,
     //   isCompleted: isCompleted,
     //   created_at: new Date(),
     //   due_date: date ? new Date(date) : "",
@@ -28,7 +28,7 @@ function Input({
       ...todoList,
       {
         id: todoList.length + 1,
-        data: formData,
+        data: textInputData,
         isCompleted: isCompleted,
         created_at: new Date(),
         due_date: date ? new Date(date) : "",
@@ -36,7 +36,7 @@ function Input({
       },
     ]);
 
-    setFormData("");
+    setTextInputData("");
     setDate("");
     // setTimeout(()=>{
     //   alert(this.data)
@@ -61,7 +61,7 @@ function Input({
             <textarea
               className="rounded-lg bg-stone-700 appearance-none border-0 focus:outline-none text-white custom-scrollbar "
               placeholder="Add Item"
-              value={formData}
+              value={textInputData}
               onChange={handleChange}
               type="text"
             />

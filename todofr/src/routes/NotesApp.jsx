@@ -58,6 +58,7 @@ function NotesApp() {
         <button
           className="bg-blue-800 rounded-full w-7 h-7 absolute bottom-20 sm:scale-150"
           type="submit"
+          onClick={() => setShowNotesEditor()}
         >
           +
         </button>

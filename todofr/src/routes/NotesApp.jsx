@@ -44,6 +44,7 @@ function NotesApp() {
     },
   ]);
   // const [showInputModal, setShowInputModal] = useState(false);
+  localStorage.setItem("notes", notes);
   return (
     <div className="flex flex-col items-center gap-2 h-fit pb-20">
       <div className="w-full h-[15dvh]">
@@ -56,7 +57,7 @@ function NotesApp() {
           to={`/notesEditor/${item.id}`}
           className="w-full flex justify-center"
         >
-          <NoteCards item={item} />
+          <NoteCards key={item.id} item={item} />
         </NavLink>
       ))}
 

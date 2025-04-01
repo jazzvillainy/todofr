@@ -5,7 +5,7 @@ import { UserAuth } from "../AuthContext";
 import { NavLink, useNavigate } from "react-router";
 
 function Signup() {
-    const navigate = useNavigate()
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState("");
@@ -17,7 +17,7 @@ function Signup() {
     e.preventDefault();
     setLoading(true);
     try {
-      const result = await signUpNewUser(email, password);
+      const result = await signUpNewUser({ email: email, password: password });
 
       if (result.success) {
         navigate("/notesapp");
@@ -28,6 +28,8 @@ function Signup() {
       setLoading(false);
     }
   };
+  console.log(supabase);
+  
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-black text-white">

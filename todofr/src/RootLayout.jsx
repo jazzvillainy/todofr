@@ -7,7 +7,7 @@ import { useLocation } from "react-router";
 
 function RootLayout() {
   const currentLoc = useLocation()
-  console.log(currentLoc);
+  // console.log(currentLoc);
   
   return (
     <div className="bg-black">

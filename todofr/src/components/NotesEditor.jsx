@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { NavLink, useParams } from "react-router";
-
+import supabase from "../supaBaseConfig";
 function NotesEditor() {
   // const [notesList, setNotesLIst] = useState("");
+  // const notesList = localStorage.getItem("notes");
+  // const notesListParse = JSON.parse(notesList);LPMA3D0H;
   // replace with context
 
   // try having a ternary operator in the event prop onclick={hbsbbisd? ksbfvbk: jhjafjv} for the create note button laterr
@@ -13,19 +15,25 @@ function NotesEditor() {
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    const { data, error } = await supabase.from("items").insert([{title, content:noteEditorInput}]).select();
+    if (error) {
+      console.log(error);
+    }
+    if (data) {
+      console.log(data);
+    }
 
-    setNotesLIst([
-      ...notesList,
-      {
-        // id: notesList.length + 1,
-        id: id,
-        title: title,
-        dateCreated: new Date(),
-        content: noteEditorInput,
-      },
-    ]);
+    // setNotesLIst([
+    //   ...notesList,
+    //   {
+    //     id: id,
+    //     title: title,
+    //     dateCreated: new Date(),
+    //     content: noteEditorInput,
+    //   },
+    // ]);
     console.log(notesList);
   };
   const handleEditorInputChange = (e) => {
@@ -36,7 +44,7 @@ function NotesEditor() {
     <div className="h-full">
       <form className="flex flex-col" action="">
         <span className="flex justify-between">
-          <button className="text-white" onClick={() => {}}>
+          <button className="text-white" >
             discard
           </button>
           <NavLink to="/">
@@ -47,13 +55,13 @@ function NotesEditor() {
         </span>
         <input
           placeholder="title"
-          value={notesList
-            .filter((item) => {
-              return item.id !== id;
-            })
-            .map((item) => {
-              return item.title;
-            })}
+          // value={notesListParse
+          //   .filter((item) => {
+          //     return item.id !== id;
+          //   })
+          //   .map((item) => {
+          //     item.title;
+          //   })}
           onChange={handleTitleChange}
           type="text"
         />

@@ -4,7 +4,7 @@ import { ImRadioUnchecked } from "react-icons/im";
 import { FaCheckCircle } from "react-icons/fa";
 import { IoMdMore } from "react-icons/io";
 
-function Notes({
+function Todos({
   item,
   setTodoList,
   todoList,
@@ -73,4 +73,4 @@ function Notes({
   );
 }
 
-export default Notes;
+export default Todos;

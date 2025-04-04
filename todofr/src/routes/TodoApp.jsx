@@ -1,8 +1,12 @@
 import { useState, useEffect } from "react";
 // import Notes from "./components/notes";
 import Input from "../components/Input";
-import Notes from "../components/notes";
+// import Notes from "../components/notes";
 import Completed from "../components/Completed";
+import Todos from "../components/Todos";
+import supabase from "../supaBaseConfig";
+// import { useEffect } from "react";
+// import { data } from "react-router";
 
 function TodoApp() {
   const [todoList, setTodoList] = useState([]);
@@ -14,6 +18,27 @@ function TodoApp() {
   const [showDropDown, setShowDropDown] = useState("");
 
   const [completedList, setCompletedList] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      const { data, error } = await supabase.from("todos").select();
+      if (error) {
+        // setFetchErr("could not fetch the todo list items items");
+        console.log(error);
+        // setData("");
+      }
+      if (data) {
+        console.log(data);
+
+        setTodoList(data);
+        // setFetchErr(null);
+      }
+      // if (!data) {
+      //   setLoading(true);
+      // }
+    };
+    fetchData();
+    // localStorage.setItem("notes", data)
+  }, []);
   const handleSetCompletedList = (item) => {
     setCompletedList([...completedList, item]);
     setTodoList([...todoList.filter((x) => x !== item)]);
@@ -73,7 +98,7 @@ function TodoApp() {
               //
               return (
                 <li id={item.id} className="flex flex-col gap-1 items-center">
-                  <Notes
+                  <Todos
                     isCompleted={isCompleted}
                     setIsCompleted={setIsCompleted}
                     item={item}

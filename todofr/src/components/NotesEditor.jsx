@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink, useParams } from "react-router";
+import { NavLink, useParams, useNavigate } from "react-router";
 import supabase from "../supaBaseConfig";
 function NotesEditor() {
   // const [notesList, setNotesLIst] = useState("");
@@ -8,6 +8,7 @@ function NotesEditor() {
   // replace with context
 
   // try having a ternary operator in the event prop onclick={hbsbbisd? ksbfvbk: jhjafjv} for the create note button laterr
+  const nav = useNavigate();
   const [noteEditorInput, setNoteEditorInput] = useState("");
   const [title, setTitle] = useState("");
   const { id } = useParams();
@@ -17,12 +18,17 @@ function NotesEditor() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { data, error } = await supabase.from("items").insert([{title, content:noteEditorInput}]).select();
+    const { data, error } = await supabase
+      .from("items")
+      .insert([{ title, content: noteEditorInput }])
+      .select();
     if (error) {
       console.log(error);
     }
     if (data) {
       console.log(data);
+      nav("/notesapp", { replace: true });
+      // replace deletes or replaces the current route from the history
     }
 
     // setNotesLIst([
@@ -44,9 +50,7 @@ function NotesEditor() {
     <div className="h-full">
       <form className="flex flex-col" action="">
         <span className="flex justify-between">
-          <button className="text-white" >
-            discard
-          </button>
+          <button className="text-white">discard</button>
           <NavLink to="/">
             <button className="text-white" type="submit" onClick={handleSubmit}>
               submit

@@ -14,7 +14,7 @@ function App() {
         <Route path="/" element={<RootLayout />}>
           <Route index path="/" element={<Signup />} />
           <Route path="/notesapp" element={<NotesApp />} />
-          <Route path="/notes" element={<TodoApp />} />
+          <Route path="/todos" element={<TodoApp />} />
           <Route path="/notesEditor/:id" element={<NotesEditor />} />
           <Route path="/signin" element={<Login />} />
         </Route>

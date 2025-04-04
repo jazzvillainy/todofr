@@ -11,7 +11,7 @@ function NotesApp() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data, error } = await supabase.from("item").select();
+      const { data, error } = await supabase.from("items").select();
       if (error) {
         setFetchErr("could not fetch the todo list items items");
         console.log(error);
@@ -43,7 +43,6 @@ function NotesApp() {
 
       <Search />
       {fetchErr && <p className="text-red-800">{fetchErr}</p>}
-      {fetchData}
       {/* it seems to work perfectly with hardcoded data idk why */}
       {fetchData &&
         fetchData.map((item) => (

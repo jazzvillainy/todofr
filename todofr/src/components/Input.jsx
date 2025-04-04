@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import supabase from "../supaBaseConfig";
 
 function Input({
   textInputData,
@@ -11,11 +12,35 @@ function Input({
   const [date, setDate] = useState("");
   // const [showModal, setShowModal] = useState(true);
 
+  const handleDate = (e) => {
+    setDate(e.target.value);
+  };
   const handleChange = (e) => {
     setTextInputData(e.target.value);
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const { data, error } = await supabase
+      .from("todos")
+      .insert([
+        {
+          id: todoList.length + 1,
+          data: textInputData,
+          isCompleted: isCompleted,
+          // created_at: new Date(),
+          due_date: date ? new Date(date) : "",
+          showDropDown: false,
+        },
+      ])
+      .select();
+
+    if (error) {
+      console.log(error);
+    }
+    if (data) {
+      // setTodoList(data)
+    }
     // todoList[todoList.length] = {
     //   id: todoList.length + 1,
     //   data: textInputData,
@@ -24,26 +49,23 @@ function Input({
     //   due_date: date ? new Date(date) : "",
     //   showDropDown: false,
 
-    setTodoList([
-      ...todoList,
-      {
-        id: todoList.length + 1,
-        data: textInputData,
-        isCompleted: isCompleted,
-        created_at: new Date(),
-        due_date: date ? new Date(date) : "",
-        showDropDown: false,
-      },
-    ]);
+    // setTodoList([
+    //   ...todoList,
+    //   {
+    //     id: todoList.length + 1,
+    //     data: textInputData,
+    //     isCompleted: isCompleted,
+    //     created_at: new Date(),
+    //     due_date: date ? new Date(date) : "",
+    //     showDropDown: false,
+    //   },
+    // ]);
 
     setTextInputData("");
     setDate("");
     // setTimeout(()=>{
     //   alert(this.data)
     // }, this.due_date.getTime())
-  };
-  const handleDate = (e) => {
-    setDate(e.target.value);
   };
   return (
     <>

@@ -31,7 +31,7 @@ function RootLayout() {
           </NavLink>
 
           <NavLink
-            to="/notes"
+            to="/todos"
             className={({ isActive }) =>
               isActive
                 ? "text-blue-500 border-b-2 border-blue-500 w-[50%]"

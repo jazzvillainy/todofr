@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
-import Notes from "./notes";
+// import Notes from "./notes";
+import Todos from "./Todos";
 
 function Completed({ todoList, setCompletedList, completedList, setTodoList, handleClick }) {
   return (
@@ -7,7 +8,7 @@ function Completed({ todoList, setCompletedList, completedList, setTodoList, han
       <ul className="flex flex-col gap-1 items-center">
         {completedList.map((x) => {
           return (
-            <Notes
+            <Todos
               setCompletedList={false}
               setTodoList={setTodoList}
               item={x}

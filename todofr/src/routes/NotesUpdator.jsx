@@ -1,26 +1,33 @@
-import React, { useState } from "react";
-import { NavLink, useParams, useNavigate } from "react-router";
+import React, { useEffect, useState } from "react";
+import { NavLink, useParams, useNavigate, data } from "react-router";
 import supabase from "../supaBaseConfig";
-function NotesEditor() {
-  // const [notesList, setNotesLIst] = useState("");
-  // const notesList = localStorage.getItem("notes");
-  // const notesListParse = JSON.parse(notesList);LPMA3D0H;
-  // replace with context
 
-  // try having a ternary operator in the event prop onclick={hbsbbisd? ksbfvbk: jhjafjv} for the create note button laterr
+export const NotesUpdator = () => {
   const nav = useNavigate();
   const [noteEditorInput, setNoteEditorInput] = useState("");
   const [title, setTitle] = useState("");
   const { id } = useParams();
+  const [error, setError] = useState("");
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
+    if (title || noteEditorInput) {
+      setError("");
+    }
   };
+  //   handling submit
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!noteEditorInput) {
+      setError("cannot submit empty fields");
+      return;
+    }
+
     const { data, error } = await supabase
       .from("items")
-      .insert([{ id, title, content: noteEditorInput }])
+      .update([{ id, title, content: noteEditorInput }])
+      .eq("id", id)
       .select();
     if (error) {
       console.log(error);
@@ -28,28 +35,39 @@ function NotesEditor() {
     if (data) {
       console.log(data);
       nav("/notesapp", { replace: true });
-      // replace deletes or replaces the current route from the history
     }
 
-    // setNotesLIst([
-    //   ...notesList,
-    //   {
-    //     id: id,
-    //     title: title,
-    //     dateCreated: new Date(),
-    //     content: noteEditorInput,
-    //   },
-    // ]);
     console.log(notesList);
   };
   const handleEditorInputChange = (e) => {
     setNoteEditorInput(e.target.value);
+    if (title || noteEditorInput) {
+      setError("");
+    }
   };
-
-  
+  //   fetch specific item to update
+  useEffect(() => {
+    const handleFetchSingleItem = async () => {
+      const { data, error } = await supabase
+        .from("items")
+        .select()
+        .eq("id", id)
+        .single();
+      if (error) {
+        nav("/notesapp", { replace: true, viewTransition: true });
+        // i wonder wtf view transition is about
+      }
+      if (data) {
+        setTitle(data.title);
+        setNoteEditorInput(data.content);
+      }
+    };
+    handleFetchSingleItem();
+  }, []);
 
   return (
     <div className="h-full">
+      <p className="text-red-700 w-full text-center">{error}</p>
       <form className="flex flex-col" action="">
         <span className="flex justify-between">
           <button className="text-white">discard</button>
@@ -61,13 +79,7 @@ function NotesEditor() {
         </span>
         <input
           placeholder="title"
-          // value={notesListParse
-          //   .filter((item) => {
-          //     return item.id !== id;
-          //   })
-          //   .map((item) => {
-          //     item.title;
-          //   })}
+          value={title}
           onChange={handleTitleChange}
           type="text"
         />
@@ -80,6 +92,4 @@ function NotesEditor() {
       </form>
     </div>
   );
-}
-
-export default NotesEditor;
+};

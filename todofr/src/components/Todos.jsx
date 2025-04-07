@@ -3,8 +3,11 @@ import { MdAccessAlarm } from "react-icons/md";
 import { ImRadioUnchecked } from "react-icons/im";
 import { FaCheckCircle } from "react-icons/fa";
 import { IoMdMore } from "react-icons/io";
+import supabase from "../supaBaseConfig";
+import React from "react";
 
 function Todos({
+  clientSideDelete,
   item,
   setTodoList,
   todoList,
@@ -18,10 +21,27 @@ function Todos({
   completedList,
   handleClick,
 }) {
-  const handleMoreOptions = () => {
-    item.showDropDown = !item.showDropDown;
-    console.log(item);
+  const handleDelete = async () => {
+    const { data, error } = await supabase
+      .from("todos")
+      .delete()
+      .eq("id", item.id)
+      .select();
+    console.log(data);
+
+    if (error) {
+      console.log(error);
+    }
+    if (data) {
+      clientSideDelete(item.id);
+    }
   };
+  const handleMoreOptions = () => {
+    // item.showDropDown = !item.showDropDown;
+    // we're filter out this item from the todo list and replacingit with a version of it that the new boolean state
+    setTodoList([...todoList.filter(todo=>todo.id !== item.id), { ...item, showDropDown: !item.showDropDown }]);
+  };
+  console.log(todoList);
   return (
     <>
       <li
@@ -63,7 +83,9 @@ function Todos({
         </button>
         {item.showDropDown && (
           <ul className="absolute right-0 text-white bg-slate-600">
-            <li>Delete</li>
+            <li onClick={handleDelete}>
+              <button>Delete</button>
+            </li>
             <li>Edit</li>
             <li>Share</li>
           </ul>

@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 // import Notes from "./components/notes";
-import Input from "../components/Input";
+import Input from "../components/TodoInput";
 // import Notes from "../components/notes";
 import Completed from "../components/Completed";
 import Todos from "../components/Todos";
 import supabase from "../supaBaseConfig";
+import { data } from "react-router";
 // import { useEffect } from "react";
 // import { data } from "react-router";
 
@@ -39,6 +40,9 @@ function TodoApp() {
     fetchData();
     // localStorage.setItem("notes", data)
   }, []);
+  const clientSideDelete = (id) => {
+    setTodoList(todoList.filter((todo) => todo.id !== id));
+  };
   const handleSetCompletedList = (item) => {
     setCompletedList([...completedList, item]);
     setTodoList([...todoList.filter((x) => x !== item)]);
@@ -111,6 +115,7 @@ function TodoApp() {
                     setCompletedList={setCompletedList}
                     completedList={completedList}
                     handleClick={handleSetCompletedList}
+                    clientSideDelete={clientSideDelete}
                   />
                 </li>
               );

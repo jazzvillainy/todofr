@@ -6,6 +6,7 @@ import NotesApp from "./routes/NotesApp";
 import NotesEditor from "./components/NotesEditor";
 import Signup from "./routes/Signup";
 import Login from "./routes/Login";
+import { NotesUpdator } from "./routes/NotesUpdator";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/todos" element={<TodoApp />} />
           <Route path="/notesEditor/:id" element={<NotesEditor />} />
           <Route path="/signin" element={<Login />} />
+          <Route path="/updator/:id" element={<NotesUpdator/>} />
         </Route>
       </Routes>
     </div>  

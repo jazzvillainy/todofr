@@ -42,12 +42,14 @@ function NotesApp() {
       </div>
 
       <Search />
+      {/* {!fetchData.length && <p className="text-red-800">Loading...</p>} */}
+      {!fetchErr && !fetchData.length && <p className="text-red-800">take down some notes!</p>}
       {fetchErr && <p className="text-red-800">{fetchErr}</p>}
       {/* it seems to work perfectly with hardcoded data idk why */}
       {fetchData &&
         fetchData.map((item) => (
           <NavLink
-            to={`/notesEditor/${item.id}`}
+            to={`/updator/${item.id}`}
             className="w-full flex justify-center"
           >
             <NoteCards key={item.id} item={item} />

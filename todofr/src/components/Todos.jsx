@@ -41,7 +41,7 @@ function Todos({
     // we're filter out this item from the todo list and replacingit with a version of it that the new boolean state
     setTodoList([...todoList.filter(todo=>todo.id !== item.id), { ...item, showDropDown: !item.showDropDown }]);
   };
-  console.log(todoList);
+  // console.log(todoList);
   return (
     <>
       <li

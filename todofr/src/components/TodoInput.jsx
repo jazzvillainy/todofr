@@ -38,9 +38,9 @@ function Input({
     if (error) {
       console.log(error);
     }
-    if (data) {
-      // setTodoList(data)
-    }
+    // if (data) {
+    //   // setTodoList(data)
+    // }
     // todoList[todoList.length] = {
     //   id: todoList.length + 1,
     //   data: textInputData,

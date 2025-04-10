@@ -1,13 +1,9 @@
 import { useState, useEffect } from "react";
-// import Notes from "./components/notes";
 import Input from "../components/TodoInput";
-// import Notes from "../components/notes";
 import Completed from "../components/Completed";
 import Todos from "../components/Todos";
 import supabase from "../supaBaseConfig";
 import { data } from "react-router";
-// import { useEffect } from "react";
-// import { data } from "react-router";
 
 function TodoApp() {
   const [todoList, setTodoList] = useState([]);
@@ -43,9 +39,26 @@ function TodoApp() {
   const clientSideDelete = (id) => {
     setTodoList(todoList.filter((todo) => todo.id !== id));
   };
-  const handleSetCompletedList = (item) => {
-    setCompletedList([...completedList, item]);
-    setTodoList([...todoList.filter((x) => x !== item)]);
+  const handleSetCompletedList = async (item) => {
+    // setCompletedList([...completedList, { ...item, isCompleted: true }]);
+    setTodoList([...todoList.filter((x) => x !== item), { ...item, isCompleted: true }]);
+    const { data, error } = await supabase
+      .from("todos")
+      .update([
+        {
+          id: item.id,
+          data: item.textInputData,
+          isCompleted: !item.isCompleted,
+          created_at: item.created_at,
+          due_date: item.due_date,
+          showDropDown: item.showDropDown,
+        },
+      ])
+      .eq("id", item.id)
+      .select();
+
+   
+    console.log(error);
 
     // console.log(item);
 
@@ -72,9 +85,28 @@ function TodoApp() {
     //   }, 2500);
     // }
   };
-  const handleSetTodoList = (item) => {
-    setTodoList([...todoList, item]);
-    setCompletedList([...completedList.filter((x) => x !== item)]);
+  const handleSetTodoList = async (item) => {
+    setTodoList([
+      ...todoList.filter((x) => x !== item),
+      { ...item, isCompleted: false },
+    ]);
+    // setCompletedList([...completedList.filter((x) => x !== item)]);
+    const { data, error } = await supabase
+      .from("todos")
+      .update([
+        {
+          id: item.id,
+          data: item.textInputData,
+          isCompleted: !item.isCompleted,
+          created_at: item.created_at,
+          due_date: item.due_date,
+          showDropDown: item.showDropDown,
+        },
+      ])
+      .eq("id", item.id)
+      .select();
+
+    
   };
   return (
     <>

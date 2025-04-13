@@ -1,10 +1,10 @@
 // import React from 'react'
 import Signup from "./Signup";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import supabase from "../supaBaseConfig";
-import { UserAuth } from "../AuthContext";
-// import { Navigate } from "react-router";
+import { Navigate } from "react-router";
 import { NavLink, useNavigate } from "react-router";
+import { AuthContext } from "../AuthContext";
 
 function Login() {
   const navigate = useNavigate();
@@ -13,15 +13,19 @@ function Login() {
   const [loading, setLoading] = useState("");
   const [error, setError] = useState("");
 
-  const { session, signUpNewUser, signInUser } = UserAuth();
-  console.log(session);
+  const { session, signUpNewUser, signOut, signIn } = useContext(AuthContext);
+  // console.log(session);
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const result = await signInUser({ email, password });
+      const result = await signIn(email, password);
+      console.log(result);
 
-      if (result.email == email && result.password == password) {
+      //   if (result.data.user.email == email && result.data.user.password == password) {
+      //     navigate("/notesapp");
+      //   }
+      if (result.success) {
         navigate("/notesapp");
       }
     } catch (error) {

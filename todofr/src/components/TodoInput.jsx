@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import supabase from "../supaBaseConfig";
+import { AuthContext } from "../AuthContext";
+import { useNavigate } from "react-router";
 
 function Input({
   textInputData,
@@ -8,9 +10,11 @@ function Input({
   isCompleted,
   setShowModal,
   setTodoList,
+  setShowTaskAdded,
 }) {
+  const { session } = useContext(AuthContext);
   const [date, setDate] = useState("");
-  // const [showModal, setShowModal] = useState(true);
+  const nav = useNavigate();
 
   const handleDate = (e) => {
     setDate(e.target.value);
@@ -25,18 +29,24 @@ function Input({
       .from("todos")
       .insert([
         {
-          id: todoList.length + 1,
           data: textInputData,
           isCompleted: isCompleted,
           // created_at: new Date(),
           due_date: date ? new Date(date) : "",
           showDropDown: false,
+          user_id: session.user.id,
         },
       ])
       .select();
-
     if (error) {
       console.log(error);
+    }
+    if (data) {
+      console.log(data);
+      setShowModal(false);
+      setTodoList([...todoList, ...data]);
+      setShowTaskAdded(true);
+      //  nav("/todos", { replace: true });
     }
     // if (data) {
     //   // setTodoList(data)

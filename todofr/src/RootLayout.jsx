@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink, Outlet } from "react-router";
 import { TbNotes } from "react-icons/tb";
 import { GrStatusGood } from "react-icons/gr";
@@ -6,6 +6,8 @@ import { useParams } from "react-router";
 import { useLocation } from "react-router";
 
 function RootLayout() {
+  
+  
   const currentLoc = useLocation()
   // console.log(currentLoc);
   

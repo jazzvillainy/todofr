@@ -11,7 +11,7 @@ function Completed({
 }) {
   
   return (
-    <section className="flex flex-col">
+    <section className="flex flex-col pb-20">
       <ul className="flex flex-col gap-1 items-center">
         {todoList
 

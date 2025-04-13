@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import supabase from "../supaBaseConfig";
-import { UserAuth } from "../AuthContext";
+// import { UserAuth } from "../AuthContext";
 // import { Navigate } from "react-router";
 import { NavLink, useNavigate } from "react-router";
+import { useContext } from "react";
+import { AuthContext } from "../AuthContext";
 
 function Signup() {
   const navigate = useNavigate();
@@ -11,13 +13,13 @@ function Signup() {
   const [loading, setLoading] = useState("");
   const [error, setError] = useState("");
 
-  const { session, signUpNewUser } = UserAuth();
+  const { session, signUpNewUser } = useContext(AuthContext);
   console.log(session);
-  const handleSubmit = async (e) => {
+  const handleSignUp = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const result = await signUpNewUser({ email: email, password: password });
+      const result = await signUpNewUser(email, password);
 
       if (result.success) {
         navigate("/notesapp");
@@ -29,14 +31,13 @@ function Signup() {
     }
   };
   console.log(supabase);
-  
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-black text-white">
       <form
         className="bg-black-900 p-8 rounded-lg shadow-lg w-80"
         action=""
-        onSubmit={handleSubmit}
+        onSubmit={handleSignUp}
       >
         <h2 className="text-2xl font-semibold text-center text-gray-100 mb-6">
           Sign Up

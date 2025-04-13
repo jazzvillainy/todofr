@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { NavLink, useParams, useNavigate } from "react-router";
 import supabase from "../supaBaseConfig";
+import { AuthContext } from "../AuthContext";
+import {IoMdClose} from "react-icons/io"
 function NotesEditor() {
   // const [notesList, setNotesLIst] = useState("");
   // const notesList = localStorage.getItem("notes");
@@ -11,7 +13,8 @@ function NotesEditor() {
   const nav = useNavigate();
   const [noteEditorInput, setNoteEditorInput] = useState("");
   const [title, setTitle] = useState("");
-  const { id } = useParams();
+  // const { id } = useParams();
+  const { session } = useContext(AuthContext);
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
@@ -20,7 +23,7 @@ function NotesEditor() {
     e.preventDefault();
     const { data, error } = await supabase
       .from("items")
-      .insert([{ id, title, content: noteEditorInput }])
+      .insert([{ title, content: noteEditorInput, user_id: session.user.id }])
       .select();
     if (error) {
       console.log(error);
@@ -40,39 +43,42 @@ function NotesEditor() {
     //     content: noteEditorInput,
     //   },
     // ]);
-    console.log(notesList);
+    // console.log(notesList);
   };
   const handleEditorInputChange = (e) => {
     setNoteEditorInput(e.target.value);
   };
 
-  
-
   return (
     <div className="h-full">
       <form className="flex flex-col" action="">
         <span className="flex justify-between">
-          <button className="text-white">discard</button>
-          <NavLink to="/">
-            <button className="text-white" type="submit" onClick={handleSubmit}>
-              submit
+          <NavLink to="/notesapp">
+            <button className="text-white">
+              <IoMdClose />
             </button>
           </NavLink>
+          {/* <NavLink > */}
+          <button className="text-white" type="submit" onClick={handleSubmit}>
+            save
+          </button>
+          {/* </NavLink> */}
         </span>
         <input
-          placeholder="title"
-          // value={notesListParse
-          //   .filter((item) => {
-          //     return item.id !== id;
-          //   })
-          //   .map((item) => {
-          //     item.title;
-          //   })}
+          placeholder="Title"
+          className="w-full min-h-[200px] bg-black border-2 border-black rounded-lg shadow-sm
+                           focus:outline-none
+                           resize-y font-mono text-white placeholder:text-gray-500
+                           dark:bg-black dark:border-black dark:text-white dark:placeholder:text-gray-500"
           onChange={handleTitleChange}
           type="text"
         />
-        <input
-          placeholder="notes"
+        <textarea
+          className="p-10 w-full min-h-[200px] bg-black border-2 border-black rounded-lg shadow-sm
+                           focus:outline-none focus:ring-2 focus:ring-yellow-40
+                           resize-y font-mono text-white placeholder:text-gray-500
+                           dark:bg-black dark:border-black dark:text-white dark:placeholder:text-gray-500"
+          placeholder="Note something down"
           value={noteEditorInput}
           onChange={handleEditorInputChange}
           type="text"

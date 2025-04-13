@@ -1,23 +1,25 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Input from "../components/TodoInput";
 import Completed from "../components/Completed";
 import Todos from "../components/Todos";
 import supabase from "../supaBaseConfig";
 import { data } from "react-router";
+import { AuthContext } from "../AuthContext";
 
-function TodoApp() {
+function  TodoApp() {
   const [todoList, setTodoList] = useState([]);
   const [textInputData, setTextInputData] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [showTaskCompleted, setShowTaskCompleted] = useState(false);
-  const [showTaskRemoved, setShowTaskRemoved] = useState(false);
+  const [showTaskAdded, setShowTaskAdded] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
   const [showDropDown, setShowDropDown] = useState("");
 
   const [completedList, setCompletedList] = useState([]);
+  const {session} = useContext(AuthContext)
   useEffect(() => {
     const fetchData = async () => {
-      const { data, error } = await supabase.from("todos").select();
+      const { data, error } = await supabase.from("todos").select().eq("user_id",session.user.id);
       if (error) {
         // setFetchErr("could not fetch the todo list items items");
         console.log(error);
@@ -110,11 +112,7 @@ function TodoApp() {
   };
   return (
     <>
-      {/* {showTaskRemoved ? (
-        <h1 className="absolute bottom-0">Task removed!</h1>
-      ) : (
-        ""
-      )}
+      {/* {showTaskAdded ? <h1 className="absolute bottom-0">Task added</h1> : ""}
       {showTaskCompleted ? (
         <h1 className="absolute top-0">Task Completed!</h1>
       ) : (
@@ -123,14 +121,14 @@ function TodoApp() {
       <h4 className="px-5 py-1 text-gray-600">
         <b>TO DO</b>
       </h4>
-      <section className="flex flex-col">
+      <section className="flex flex-col pb-20">
         <ul className="flex flex-col-reverse gap-2">
           {todoList
             .filter((x) => {
               return x.isCompleted == false;
             })
             .map((item) => {
-              console.log(item);
+              // console.log(item);
               //
               return (
                 <li id={item.id} className="flex flex-col gap-1 items-center">
@@ -141,7 +139,6 @@ function TodoApp() {
                     todoList={todoList}
                     setTodoList={setTodoList}
                     setShowTaskCompleted={setShowTaskCompleted}
-                    setShowTaskRemoved={setShowTaskRemoved}
                     setShowDropDown={setShowDropDown}
                     showDropDown={showDropDown}
                     setCompletedList={setCompletedList}
@@ -174,6 +171,7 @@ function TodoApp() {
           todoList={todoList}
           setTodoList={setTodoList}
           isCompleted={isCompleted}
+          setShowTaskAdded={setShowTaskAdded}
         />
       )}
       <div className="bg-transparent w-full h-1/5 fixed bottom-0 flex items-center justify-center">

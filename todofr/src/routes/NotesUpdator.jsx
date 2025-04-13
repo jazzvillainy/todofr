@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, useParams, useNavigate, data } from "react-router";
 import supabase from "../supaBaseConfig";
+import {IoMdClose} from "react-icons/io";
 
 export const NotesUpdator = () => {
   const nav = useNavigate();
@@ -67,24 +68,35 @@ export const NotesUpdator = () => {
 
   return (
     <div className="h-full">
-      <p className="text-red-700 w-full text-center">{error}</p>
       <form className="flex flex-col" action="">
         <span className="flex justify-between">
-          <button className="text-white">discard</button>
+          <NavLink to={"/notesapp"} replace>
+            <button className="text-white">
+              <IoMdClose />
+            </button>
+          </NavLink>
           <NavLink to="/">
-            <button className="text-white" type="submit" onClick={handleSubmit}>
-              submit
+            <button className="text-white flex items-center" type="submit" onClick={handleSubmit}>
+              save 
             </button>
           </NavLink>
         </span>
         <input
-          placeholder="title"
+          placeholder="Title"
           value={title}
+          className="w-full min-h-[200px] bg-black border-2 border-black rounded-lg shadow-sm
+                               focus:outline-none
+                               resize-y font-mono text-white placeholder:text-gray-500
+                               dark:bg-black dark:border-black dark:text-white dark:placeholder:text-gray-500"
           onChange={handleTitleChange}
           type="text"
         />
-        <input
-          placeholder="notes"
+        <textarea
+          className="p-10 w-full min-h-[200px] bg-black border-2 border-black rounded-lg shadow-sm
+                               focus:outline-none focus:ring-2 focus:ring-yellow-40
+                               resize-y font-mono text-white placeholder:text-gray-500
+                               dark:bg-black dark:border-black dark:text-white dark:placeholder:text-gray-500"
+          placeholder="Note something down"
           value={noteEditorInput}
           onChange={handleEditorInputChange}
           type="text"

@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { NavLink, useParams, useNavigate } from "react-router";
 import supabase from "../supaBaseConfig";
 import { AuthContext } from "../AuthContext";
-import {IoMdClose} from "react-icons/io"
+import { IoMdClose } from "react-icons/io";
 function NotesEditor() {
   // const [notesList, setNotesLIst] = useState("");
   // const notesList = localStorage.getItem("notes");

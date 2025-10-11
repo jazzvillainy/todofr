@@ -6,7 +6,7 @@ import supabase from "../supaBaseConfig";
 import { data } from "react-router";
 import { AuthContext } from "../AuthContext";
 
-function  TodoApp() {
+function TodoApp() {
   const [todoList, setTodoList] = useState([]);
   const [textInputData, setTextInputData] = useState("");
   const [showModal, setShowModal] = useState(false);
@@ -16,10 +16,13 @@ function  TodoApp() {
   const [showDropDown, setShowDropDown] = useState("");
 
   const [completedList, setCompletedList] = useState([]);
-  const {session} = useContext(AuthContext)
+  const { session } = useContext(AuthContext);
   useEffect(() => {
     const fetchData = async () => {
-      const { data, error } = await supabase.from("todos").select().eq("user_id",session.user.id);
+      const { data, error } = await supabase
+        .from("todos")
+        .select()
+        .eq("user_id", session.user.id);
       if (error) {
         // setFetchErr("could not fetch the todo list items items");
         console.log(error);
@@ -43,7 +46,10 @@ function  TodoApp() {
   };
   const handleSetCompletedList = async (item) => {
     // setCompletedList([...completedList, { ...item, isCompleted: true }]);
-    setTodoList([...todoList.filter((x) => x !== item), { ...item, isCompleted: true }]);
+    setTodoList([
+      ...todoList.filter((x) => x !== item),
+      { ...item, isCompleted: true },
+    ]);
     const { data, error } = await supabase
       .from("todos")
       .update([
@@ -59,7 +65,6 @@ function  TodoApp() {
       .eq("id", item.id)
       .select();
 
-   
     console.log(error);
 
     // console.log(item);
@@ -107,8 +112,6 @@ function  TodoApp() {
       ])
       .eq("id", item.id)
       .select();
-
-    
   };
   return (
     <>
@@ -121,7 +124,10 @@ function  TodoApp() {
       <h4 className="px-5 py-1 text-gray-600">
         <b>TO DO</b>
       </h4>
-      <section className="flex flex-col pb-20">
+      <section
+        onClick={() => setShowDropDown(false)}
+        className="flex flex-col pb-20"
+      >
         <ul className="flex flex-col-reverse gap-2">
           {todoList
             .filter((x) => {
@@ -131,22 +137,27 @@ function  TodoApp() {
               // console.log(item);
               //
               return (
-                <li id={item.id} className="flex flex-col gap-1 items-center">
-                  <Todos
-                    isCompleted={isCompleted}
-                    setIsCompleted={setIsCompleted}
-                    item={item}
-                    todoList={todoList}
-                    setTodoList={setTodoList}
-                    setShowTaskCompleted={setShowTaskCompleted}
-                    setShowDropDown={setShowDropDown}
-                    showDropDown={showDropDown}
-                    setCompletedList={setCompletedList}
-                    completedList={completedList}
-                    handleClick={handleSetCompletedList}
-                    clientSideDelete={clientSideDelete}
-                  />
-                </li>
+                <>
+                  <li
+                    id={item.id}
+                    className="flex bg flex-col gap-1 items-center"
+                  >
+                    <Todos
+                      isCompleted={isCompleted}
+                      setIsCompleted={setIsCompleted}
+                      item={item}
+                      todoList={todoList}
+                      setTodoList={setTodoList}
+                      setShowTaskCompleted={setShowTaskCompleted}
+                      setShowDropDown={setShowDropDown}
+                      showDropDown={showDropDown}
+                      setCompletedList={setCompletedList}
+                      completedList={completedList}
+                      handleClick={handleSetCompletedList}
+                      clientSideDelete={clientSideDelete}
+                    />
+                  </li>
+                </>
               );
             })}
         </ul>

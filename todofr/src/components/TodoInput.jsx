@@ -32,7 +32,7 @@ function Input({
           data: textInputData,
           isCompleted: isCompleted,
           // created_at: new Date(),
-          due_date: date ? new Date(date) : "",
+          due_date: date ? new Date(date) : null,
           showDropDown: false,
           user_id: session.user.id,
         },

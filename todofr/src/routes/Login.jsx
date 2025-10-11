@@ -1,37 +1,36 @@
-// import React from 'react'
-import Signup from "./Signup";
-import React, { useContext, useState } from "react";
-import supabase from "../supaBaseConfig";
-import { Navigate } from "react-router";
-import { NavLink, useNavigate } from "react-router";
+import { useContext, useState } from "react";
+import { useNavigate } from "react-router";
 import { AuthContext } from "../AuthContext";
 
 function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState("");
   const [error, setError] = useState("");
 
-  const { session, signUpNewUser, signOut, signIn } = useContext(AuthContext);
+  const { setSession, signIn } = useContext(AuthContext);
   // console.log(session);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+
     try {
       const result = await signIn(email, password);
       console.log(result);
 
-      //   if (result.data.user.email == email && result.data.user.password == password) {
-      //     navigate("/notesapp");
-      //   }
       if (result.success) {
+        setSession(result?.data?.session);
+        sessionStorage.setItem(
+          "usersession",
+          JSON.stringify(result?.data?.session)
+        );
         navigate("/notesapp");
       }
+      if (result.error) {
+        throw new Error(result.error);
+      }
     } catch (error) {
-      setError("an error occurred ");
-    } finally {
-      setLoading(false);
+      console.log(error);
+      setError(error);
     }
   };
   return (
@@ -72,7 +71,9 @@ function Login() {
           LogIn
         </button>
 
-        {error && <p className="mt-4 text-red-400 text-center">{error}</p>}
+        {error && (
+          <p className="mt-4 text-red-400 text-center">{error.message}</p>
+        )}
       </form>
     </div>
   );

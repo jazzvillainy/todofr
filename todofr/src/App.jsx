@@ -15,7 +15,7 @@ function App() {
     <div>
       <Routes>
         <Route path="/" element={<RootLayout />}>
-          <Route index path="/" element={<Signup />} />
+          <Route index path="/signup" element={<Signup />} />
           <Route
             path="/notesapp"
             element={

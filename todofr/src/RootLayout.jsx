@@ -6,15 +6,13 @@ import { useParams } from "react-router";
 import { useLocation } from "react-router";
 
 function RootLayout() {
-  
-  
-  const currentLoc = useLocation()
-  // console.log(currentLoc);
-  
+  const currentLoc = useLocation();
+  console.log(currentLoc);
+
   return (
     <div className="bg-black">
       <Outlet />
-      {currentLoc.pathname == "/" || currentLoc.pathname == "/signin" ? (
+      {currentLoc.pathname == "/signup" || currentLoc.pathname == "/signin" ? (
         ""
       ) : (
         <div className="h-[10%] w-full bg-white bg-opacity-5 fixed bottom-0 flex">

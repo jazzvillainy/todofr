@@ -1,5 +1,4 @@
-import React, { useContext } from "react";
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 import supabase from "./supaBaseConfig";
 
 export const AuthContext = createContext("3.,wdf");
@@ -13,23 +12,39 @@ export const AuthContextProvider = ({ children }) => {
     const { data, error } = await supabase.auth.signUp({
       email: email,
       password: password,
+      options: {
+        emailRedirectTo: "http://localhost:5173/signin",
+      },
     });
     if (error) {
-      console.error("there was a problem signing up");
-      return { success: false, error };
+      console.log(error);
+      return { success: false, error: error };
     }
+
+    setSession(data?.session);
     return { success: true, data };
   };
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      sessionStorage.setItem("usersession", session);
-    });
-    supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-      sessionStorage.setItem("username", session);
-    });
-  }, []);
+
+  supabase.auth.onAuthStateChange((event, session) => {
+    console.log(event, session);
+    if (event === "INITIAL_SESSION") {
+      console.log(event, session);
+      // handle initial session
+    } else if (event === "SIGNED_IN") {
+      console.log(event, session);
+      // handle sign in event
+    } else if (event === "SIGNED_OUT") {
+      console.log(event, session);
+      // handle sign out event
+    } else if (event === "PASSWORD_RECOVERY") {
+      console.log(event, session);
+      // handle password recovery event
+    } else if (event === "TOKEN_REFRESHED") {
+      // handle token refreshed event
+    } else if (event === "USER_UPDATED") {
+      // handle user updated event
+    }
+  });
 
   const signIn = async (email, password) => {
     try {
@@ -41,6 +56,7 @@ export const AuthContextProvider = ({ children }) => {
         console.error("sign in error occured:", error);
         return { success: false, error: error.message };
       }
+      setSession(data?.session);
       console.log("sign in success:", data);
       return { success: true, data };
     } catch (error) {
@@ -54,7 +70,9 @@ export const AuthContextProvider = ({ children }) => {
     }
   };
   return (
-    <AuthContext.Provider value={{ session, signUpNewUser, signOut, signIn }}>
+    <AuthContext.Provider
+      value={{ setSession, session, signUpNewUser, signOut, signIn }}
+    >
       {children}
     </AuthContext.Provider>
   );

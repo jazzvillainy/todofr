@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import supabase from "../supaBaseConfig";
+import { useState } from "react";
+
 // import { UserAuth } from "../AuthContext";
 // import { Navigate } from "react-router";
 import { NavLink, useNavigate } from "react-router";
@@ -10,27 +10,28 @@ function Signup() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState("");
   const [error, setError] = useState("");
 
-  const { session, signUpNewUser } = useContext(AuthContext);
-  console.log(session);
+  const { signUpNewUser } = useContext(AuthContext);
+
   const handleSignUp = async (e) => {
     e.preventDefault();
-    setLoading(true);
+
     try {
       const result = await signUpNewUser(email, password);
+      console.log(result);
 
       if (result.success) {
-        navigate("/notesapp");
+        navigate("/signin");
+      }
+      if (result.error) {
+        throw new Error(result.error);
       }
     } catch (error) {
-      setError("an error occurred ");
-    } finally {
-      setLoading(false);
+      console.log(error);
+      setError(error);
     }
   };
-  console.log(supabase);
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-black text-white">
@@ -70,35 +71,12 @@ function Signup() {
           Sign Up
         </button>
 
-        {error && <p className="mt-4 text-red-400 text-center">{error}</p>}
+        {error && (
+          <p className="mt-4 text-red-400 text-center">{error.message}</p>
+        )}
         <NavLink to={"/signin"}>Already have an account? Log in</NavLink>
       </form>
     </div>
-
-    // <div>
-    //   <form className="flex flex-col" action="" onSubmit={handleSubmit}>
-    //     <input
-    //       placeholder="Email"
-    //       type="Email"
-    //       value={email}
-    //       onChange={(e) => {
-    //         setEmail(e.target.value);
-    //       }}
-    //     />
-    //     <input
-    //       placeholder="Password"
-    //       type="Password"
-    //       value={password}
-    //       onChange={(e) => {
-    //         setPassword(e.target.value);
-    //       }}
-    //     />
-    //     <button type="submit" className="bg-green-950">
-    //       Sign Up
-    //     </button>
-    //     {error && <p>{error}</p>}
-    //   </form>
-    // </div>
   );
 }
 

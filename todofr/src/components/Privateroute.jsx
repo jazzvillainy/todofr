@@ -1,8 +1,9 @@
 import { useContext } from "react";
+import PropTypes from "prop-types";
 import { AuthContext } from "../AuthContext";
 import { Navigate } from "react-router";
 
-export const Privateroute = ({ children }) => {
+export const Privateroute = ({  children }) => {
   const { session } = useContext(AuthContext);
   const sess = sessionStorage.getItem("usersession") || session;
   if (sess == undefined) {
@@ -38,4 +39,8 @@ export const Privateroute = ({ children }) => {
     );
   }
   return <div>{session ? <div>{children}</div> : <Navigate to={"/signin"} />}</div>;
+};
+
+Privateroute.propTypes = {
+  children: PropTypes.node.isRequired,
 };

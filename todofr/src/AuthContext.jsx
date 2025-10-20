@@ -1,5 +1,6 @@
 import { createContext, useState } from "react";
 import supabase from "./supaBaseConfig";
+import PropTypes from "prop-types";
 
 export const AuthContext = createContext("3.,wdf");
 
@@ -17,7 +18,7 @@ export const AuthContextProvider = ({ children }) => {
       },
     });
     if (error) {
-      console.log(error);
+      // console.log(error);
       return { success: false, error: error };
     }
 
@@ -25,26 +26,26 @@ export const AuthContextProvider = ({ children }) => {
     return { success: true, data };
   };
 
-  supabase.auth.onAuthStateChange((event, session) => {
-    console.log(event, session);
-    if (event === "INITIAL_SESSION") {
-      console.log(event, session);
-      // handle initial session
-    } else if (event === "SIGNED_IN") {
-      console.log(event, session);
-      // handle sign in event
-    } else if (event === "SIGNED_OUT") {
-      console.log(event, session);
-      // handle sign out event
-    } else if (event === "PASSWORD_RECOVERY") {
-      console.log(event, session);
-      // handle password recovery event
-    } else if (event === "TOKEN_REFRESHED") {
-      // handle token refreshed event
-    } else if (event === "USER_UPDATED") {
-      // handle user updated event
-    }
-  });
+  // supabase.auth.onAuthStateChange((event, session) => {
+  //   console.log(event, session);
+  //   if (event === "INITIAL_SESSION") {
+  //     console.log(event, session);
+  //     // handle initial session
+  //   } else if (event === "SIGNED_IN") {
+  //     console.log(event, session);
+  //     // handle sign in event
+  //   } else if (event === "SIGNED_OUT") {
+  //     console.log(event, session);
+  //     // handle sign out event
+  //   } else if (event === "PASSWORD_RECOVERY") {
+  //     console.log(event, session);
+  //     // handle password recovery event
+  //   } else if (event === "TOKEN_REFRESHED") {
+  //     // handle token refreshed event
+  //   } else if (event === "USER_UPDATED") {
+  //     // handle user updated event
+  //   }
+  // });
 
   const signIn = async (email, password) => {
     try {
@@ -57,7 +58,7 @@ export const AuthContextProvider = ({ children }) => {
         return { success: false, error: error.message };
       }
       setSession(data?.session);
-      console.log("sign in success:", data);
+      // console.log("sign in success:", data);
       return { success: true, data };
     } catch (error) {
       console.log(error);
@@ -78,6 +79,9 @@ export const AuthContextProvider = ({ children }) => {
   );
 };
 
+AuthContextProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 // export const UserAuth = () => {
 //   return useContext(AuthContext);
 // };

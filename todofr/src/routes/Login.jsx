@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { useNavigate } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 import { AuthContext } from "../AuthContext";
 
 function Login() {
@@ -74,6 +74,9 @@ function Login() {
         {error && (
           <p className="mt-4 text-red-400 text-center">{error.message}</p>
         )}
+        <p className=" flex items-center justify-center w-full h-10">
+          <NavLink to={"/signup"}>Create an account?</NavLink>
+        </p>
       </form>
     </div>
   );

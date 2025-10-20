@@ -74,7 +74,10 @@ function Signup() {
         {error && (
           <p className="mt-4 text-red-400 text-center">{error.message}</p>
         )}
+        <p className=" flex items-center justify-center w-full h-10">
         <NavLink to={"/signin"}>Already have an account? Log in</NavLink>
+          {/* <NavLink to={"/signup"}>Create an account?</NavLink> */}
+        </p>
       </form>
     </div>
   );

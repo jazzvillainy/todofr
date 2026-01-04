@@ -85,7 +85,7 @@ function NotesApp() {
 
       <Search handleSearch={handleSearch} />
 
-      {!fetchData.length && <p className="text-blue-800">loading!</p>}
+      {!fetchData.length && <p className="text-blue-800">take down some notes!</p>}
 
       {fetchErr && <p className="text-red-800">{fetchErr}</p>}
 

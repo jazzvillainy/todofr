@@ -23,7 +23,7 @@ function Login() {
           "usersession",
           JSON.stringify(result?.data?.session)
         );
-        navigate("/notesapp");
+        navigate("/");
       }
       if (result.error) {
         throw new Error(result.error);

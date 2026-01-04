@@ -30,7 +30,7 @@ function NotesEditor() {
     }
     if (data) {
       console.log(data);
-      nav("/notesapp", { replace: true });
+      nav("/", { replace: true });
       // replace deletes or replaces the current route from the history
     }
 
@@ -53,7 +53,7 @@ function NotesEditor() {
     <div className="h-full">
       <form className="flex flex-col" action="">
         <span className="flex justify-between">
-          <NavLink to="/notesapp">
+          <NavLink to="/">
             <button className="text-white">
               <IoMdClose />
             </button>

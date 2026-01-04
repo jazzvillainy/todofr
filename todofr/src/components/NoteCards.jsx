@@ -10,7 +10,10 @@ function NoteCards({ item }) {
           : item.content}
       </span>
       <span className="pt-1 text-stone-500">
-        {item.created_at.toLocaleString()}
+        {new Date(item.created_at).toLocaleString(undefined, {
+          dateStyle: "medium",
+          timeStyle: "short",
+        })}
       </span>
     </div>
   );

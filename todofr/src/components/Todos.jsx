@@ -43,6 +43,7 @@ function Todos({
     ]);
   };
   // console.log(todoList);
+  
   return (
     <>
       <li
@@ -67,7 +68,10 @@ function Todos({
                     <MdAccessAlarm />
                   </span>
                   <span className=" align-text-top text-red-800">
-                    {item.due_date.toLocaleString()}
+                    {new Date(item.due_date).toLocaleString(undefined, {
+                      dateStyle: "medium",
+                      timeStyle: "short",
+                    })}
                   </span>
                 </span>
               ) : (

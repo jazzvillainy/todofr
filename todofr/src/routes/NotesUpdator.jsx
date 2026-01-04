@@ -35,7 +35,7 @@ export const NotesUpdator = () => {
     }
     if (data) {
       console.log(data);
-      nav("/notesapp", { replace: true });
+      nav("/", { replace: true });
     }
 
     console.log(notesList);
@@ -55,7 +55,7 @@ export const NotesUpdator = () => {
         .eq("id", id)
         .single();
       if (error) {
-        nav("/notesapp", { replace: true, viewTransition: true });
+        nav("/", { replace: true, viewTransition: true });
         // i wonder wtf view transition is about
       }
       if (data) {
@@ -70,7 +70,7 @@ export const NotesUpdator = () => {
     <div className="h-full">
       <form className="flex flex-col" action="">
         <span className="flex justify-between">
-          <NavLink to={"/notesapp"} replace>
+          <NavLink to={"/"} replace>
             <button className="text-white">
               <IoMdClose />
             </button>

@@ -1,5 +1,4 @@
-import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router";
+import {  Routes, Route } from "react-router";
 import TodoApp from "./routes/TodoApp";
 import RootLayout from "./RootLayout";
 import NotesApp from "./routes/NotesApp";
@@ -17,7 +16,7 @@ function App() {
         <Route path="/" element={<RootLayout />}>
           <Route index path="/signup" element={<Signup />} />
           <Route
-            path="/notesapp"
+            path="/"
             element={
               <Privateroute>
                 <NotesApp />

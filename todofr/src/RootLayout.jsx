@@ -16,7 +16,7 @@ function RootLayout() {
       ) : (
         <div className="h-[10%] w-full bg-white bg-opacity-5 fixed bottom-0 flex">
           <NavLink
-            to="/notesapp"
+            to="/"
             className={({ isActive }) =>
               isActive
                 ? "text-blue-500 border-b-2 border-blue-500 w-[50%]"

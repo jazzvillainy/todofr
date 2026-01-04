@@ -35,7 +35,7 @@ export const AuthContextProvider = ({ children }) => {
       email,
       password,
       options: {
-        emailRedirectTo: "http://notesbyjazzvillain.vercel.app/signin",
+        emailRedirectTo: "https://notesbyjazzvillain.vercel.app/signin",
       },
     });
 
